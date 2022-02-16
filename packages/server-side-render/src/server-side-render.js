@@ -7,13 +7,7 @@ import { isEqual } from 'lodash';
  * WordPress dependencies
  */
 import { useDebounce, usePrevious } from '@wordpress/compose';
-import {
-	RawHTML,
-	renderToString,
-	useEffect,
-	useRef,
-	useState,
-} from '@wordpress/element';
+import { RawHTML, useEffect, useRef, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
@@ -190,7 +184,7 @@ export function useServerSideRender( props ) {
 	const hasError = response?.error;
 
 	if ( isLoading ) {
-		return renderToString(
+		return (
 			<LoadingResponsePlaceholder { ...props } showLoader={ showLoader }>
 				{ hasResponse && <RawHTML>{ response }</RawHTML> }
 			</LoadingResponsePlaceholder>
@@ -198,17 +192,20 @@ export function useServerSideRender( props ) {
 	}
 
 	if ( hasEmptyResponse || ! hasResponse ) {
-		return renderToString( <EmptyResponsePlaceholder { ...props } /> );
+		return <EmptyResponsePlaceholder { ...props } />;
 	}
 
 	if ( hasError ) {
-		return renderToString(
-			<ErrorResponsePlaceholder response={ response } { ...props } />
-		);
+		return <ErrorResponsePlaceholder response={ response } { ...props } />;
 	}
 
-	// eslint-disable-next-line no-console
-	console.log( response );
+	try {
+		// eslint-disable-next-line no-console
+		console.log( response );
+	} catch ( error ) {
+		// eslint-disable-next-line no-console
+		console.log( 'could not log response' );
+	}
 
 	return response;
 }

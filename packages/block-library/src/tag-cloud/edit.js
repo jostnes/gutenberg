@@ -13,6 +13,7 @@ import {
 	RangeControl,
 } from '@wordpress/components';
 import { withSelect } from '@wordpress/data';
+import { renderToString } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
@@ -97,7 +98,7 @@ function TagCloudEdit( { attributes, setAttributes, taxonomies } ) {
 			{ inspectorControls }
 			<div
 				{ ...useBlockProps( {
-					dangerouslySetInnerHTML: { __html: foo },
+					dangerouslySetInnerHTML: { __html: renderToString( foo ) },
 				} ) }
 			/>
 		</>
