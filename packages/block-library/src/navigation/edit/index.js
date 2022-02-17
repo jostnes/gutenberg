@@ -206,10 +206,6 @@ function Navigation( {
 
 	const isWithinUnassignedArea = !! navigationArea && ! ref;
 
-	const [ isPlaceholderShown, setIsPlaceholderShown ] = useState(
-		! hasUncontrolledInnerBlocks || isWithinUnassignedArea
-	);
-
 	const [ isResponsiveMenuOpen, setResponsiveMenuVisibility ] = useState(
 		false
 	);
@@ -302,6 +298,11 @@ function Navigation( {
 	] = useState();
 	const [ detectedOverlayColor, setDetectedOverlayColor ] = useState();
 
+	const isPlaceholderShown =
+		! isEntityAvailable ||
+		! hasUncontrolledInnerBlocks ||
+		isWithinUnassignedArea;
+
 	// Spacer block needs orientation from context. This is a patch until
 	// https://github.com/WordPress/gutenberg/issues/36197 is addressed.
 	useEffect( () => {
@@ -331,11 +332,6 @@ function Navigation( {
 			);
 		}
 	} );
-
-	// Hide the placeholder if an navigation menu entity has loaded.
-	useEffect( () => {
-		setIsPlaceholderShown( ! isEntityAvailable );
-	}, [ isEntityAvailable ] );
 
 	const [ showCantEditNotice, hideCantEditNotice ] = useNavigationNotice( {
 		name: 'block-library/core/navigation/permissions/update',
@@ -396,7 +392,6 @@ function Navigation( {
 			if ( ! ref ) {
 				replaceInnerBlocks( clientId, [] );
 			}
-			setIsPlaceholderShown( true );
 		} );
 	}, [ clientId, ref ] );
 
@@ -661,7 +656,6 @@ function Navigation( {
 					{ isPlaceholderShown && (
 						<PlaceholderComponent
 							onFinish={ ( post ) => {
-								setIsPlaceholderShown( false );
 								if ( post ) {
 									setRef( post.id );
 								}
