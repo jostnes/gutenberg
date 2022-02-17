@@ -8,6 +8,7 @@ import classnames from 'classnames';
  */
 import { Icon, navigation } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
+import { Spinner } from '@wordpress/components';
 
 const PlaceholderPreview = ( { isLoading } ) => {
 	return (
@@ -20,6 +21,7 @@ const PlaceholderPreview = ( { isLoading } ) => {
 			<div className="wp-block-navigation-placeholder__actions__indicator">
 				<Icon icon={ navigation } />
 				{ __( 'Navigation' ) }
+				{ isLoading && <Spinner /> }
 			</div>
 		</div>
 	);
