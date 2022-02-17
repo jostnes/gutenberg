@@ -299,10 +299,18 @@ function Navigation( {
 	] = useState();
 	const [ detectedOverlayColor, setDetectedOverlayColor ] = useState();
 
-	const isPlaceholderShown = ! isEntityAvailable;
-	// ||
-	// ! hasUncontrolledInnerBlocks ||
-	// isWithinUnassignedArea;
+	// "placeholder" shown if:
+	// - we don't have uncontrolled blocks.
+	// - (legacy) we have a Navigation Area without a ref attribute pointing to a Navigation Post.
+	// - we don't have a ref attribute pointing to a Navigation Post.
+	const isPlaceholderShown =
+		!! ( ! hasUncontrolledInnerBlocks || isWithinUnassignedArea ) && ! ref;
+
+	// "loading" state:
+	// - there is a ref attribute pointing to a Navigation Post
+	// - the Navigation Post hasn't resolved yet.
+	// TODO - needs to take in account uncontrolled inner blocks.
+	const isLoading = !! ( ref && ! isEntityAvailable );
 
 	// Spacer block needs orientation from context. This is a patch until
 	// https://github.com/WordPress/gutenberg/issues/36197 is addressed.
@@ -472,6 +480,33 @@ function Navigation( {
 		'wp-block-navigation__overlay-menu-preview',
 		{ open: overlayMenuPreview }
 	);
+
+	if ( isLoading ) {
+		return (
+			<nav { ...blockProps }>
+				<PlaceholderPreview isLoading />
+			</nav>
+		);
+	}
+
+	if ( isPlaceholderShown ) {
+		return (
+			<nav { ...blockProps }>
+				<PlaceholderComponent
+					onFinish={ ( post ) => {
+						if ( post ) {
+							setRef( post.id );
+						}
+						selectBlock( clientId );
+					} }
+					canSwitchNavigationMenu={ canSwitchNavigationMenu }
+					hasResolvedNavigationMenus={ hasResolvedNavigationMenus }
+					clientId={ clientId }
+					canUserCreateNavigationMenu={ canUserCreateNavigationMenu }
+				/>
+			</nav>
+		);
+	}
 
 	return (
 		<EntityProvider kind="postType" type="wp_navigation" id={ ref }>
@@ -654,28 +689,6 @@ function Navigation( {
 					</InspectorControls>
 				) }
 				<nav { ...blockProps }>
-					{ isPlaceholderShown && (
-						<PlaceholderComponent
-							onFinish={ ( post ) => {
-								if ( post ) {
-									setRef( post.id );
-								}
-								selectBlock( clientId );
-							} }
-							canSwitchNavigationMenu={ canSwitchNavigationMenu }
-							hasResolvedNavigationMenus={
-								hasResolvedNavigationMenus
-							}
-							clientId={ clientId }
-							canUserCreateNavigationMenu={
-								canUserCreateNavigationMenu
-							}
-						/>
-					) }
-					{ ! hasResolvedCanUserCreateNavigationMenu ||
-						( ! isEntityAvailable && ! isPlaceholderShown && (
-							<PlaceholderPreview isLoading />
-						) ) }
 					{ ! isPlaceholderShown && (
 						<ResponsiveWrapper
 							id={ clientId }
