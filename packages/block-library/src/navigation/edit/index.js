@@ -186,7 +186,7 @@ function Navigation( {
 				hasSubmenus: !! innerBlocks.find(
 					( block ) => block.name === 'core/navigation-submenu'
 				),
-				hasUncontrolledInnerBlocks: _hasUncontrolledInnerBlocks,
+				hasUncontrolledInnerBlocks: !! _hasUncontrolledInnerBlocks,
 				uncontrolledInnerBlocks: _uncontrolledInnerBlocks,
 				isInnerBlockSelected: hasSelectedInnerBlock( clientId, true ),
 			};
@@ -204,6 +204,7 @@ function Navigation( {
 		setHasSavedUnsavedInnerBlocks,
 	] = useState( false );
 
+	// eslint-disable-next-line no-unused-vars
 	const isWithinUnassignedArea = !! navigationArea && ! ref;
 
 	const [ isResponsiveMenuOpen, setResponsiveMenuVisibility ] = useState(
@@ -298,10 +299,10 @@ function Navigation( {
 	] = useState();
 	const [ detectedOverlayColor, setDetectedOverlayColor ] = useState();
 
-	const isPlaceholderShown =
-		! isEntityAvailable ||
-		! hasUncontrolledInnerBlocks ||
-		isWithinUnassignedArea;
+	const isPlaceholderShown = ! isEntityAvailable;
+	// ||
+	// ! hasUncontrolledInnerBlocks ||
+	// isWithinUnassignedArea;
 
 	// Spacer block needs orientation from context. This is a patch until
 	// https://github.com/WordPress/gutenberg/issues/36197 is addressed.
