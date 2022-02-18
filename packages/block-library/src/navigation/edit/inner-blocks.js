@@ -96,7 +96,7 @@ export default function NavigationInnerBlocks( {
 		isSelected ||
 		( isImmediateParentOfSelectedBlock && ! selectedBlockHasDescendants );
 
-	const placeholder = useMemo( () => <PlaceholderPreview />, [] );
+	const placeholder = PlaceholderPreview;
 
 	const innerBlocksProps = useInnerBlocksProps(
 		{
