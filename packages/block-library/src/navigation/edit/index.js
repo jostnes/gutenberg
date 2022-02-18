@@ -204,7 +204,6 @@ function Navigation( {
 		setHasSavedUnsavedInnerBlocks,
 	] = useState( false );
 
-	// eslint-disable-next-line no-unused-vars
 	const isWithinUnassignedArea = !! navigationArea && ! ref;
 
 	const [ isResponsiveMenuOpen, setResponsiveMenuVisibility ] = useState(
