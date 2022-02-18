@@ -58,12 +58,12 @@ export default function NavigationPlaceholder( {
 		if ( isResolvingMenus ) {
 			speak(
 				'Loading Navigation block setup placeholder options.',
-				'assertive'
+				'polite'
 			);
 		} else {
 			speak(
 				'Navigation block setup placeholder options ready.',
-				'assertive'
+				'polite'
 			);
 		}
 	}, [ isResolvingMenus ] );
