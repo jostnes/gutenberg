@@ -25,6 +25,7 @@ export default function NavigationPlaceholder( {
 	onFinish,
 	canSwitchNavigationMenu,
 	canUserCreateNavigationMenu = false,
+	isResolvingCanUserCreateNavigationMenu,
 } ) {
 	const createNavigationMenu = useCreateNavigationMenu( clientId );
 
@@ -43,7 +44,7 @@ export default function NavigationPlaceholder( {
 		onFinish( navigationMenu, blocks );
 	};
 
-	const { hasMenus } = useNavigationEntities();
+	const { hasMenus, isResolvingMenus } = useNavigationEntities();
 
 	const onCreateEmptyMenu = () => {
 		onFinishMenuCreation( [] );
@@ -57,7 +58,8 @@ export default function NavigationPlaceholder( {
 		( canSwitchNavigationMenu || canUserCreateNavigationMenu ) &&
 		( hasNavigationMenus || hasMenus );
 
-	const hasActions = showSelectMenus || canUserCreateNavigationMenu;
+	const isResolvingActions =
+		isResolvingMenus || isResolvingCanUserCreateNavigationMenu;
 
 	return (
 		<>
@@ -76,7 +78,7 @@ export default function NavigationPlaceholder( {
 
 						<hr />
 
-						{ ! hasActions && <Spinner /> }
+						{ isResolvingActions && <Spinner /> }
 
 						{ showSelectMenus ? (
 							<>

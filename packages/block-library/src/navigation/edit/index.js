@@ -225,6 +225,7 @@ function Navigation( {
 		canUserDeleteNavigationMenu,
 		hasResolvedCanUserDeleteNavigationMenu,
 		canUserCreateNavigationMenu,
+		isResolvingCanUserCreateNavigationMenu,
 		hasResolvedCanUserCreateNavigationMenu,
 	} = useNavigationMenu( ref );
 
@@ -503,6 +504,9 @@ function Navigation( {
 					hasResolvedNavigationMenus={ hasResolvedNavigationMenus }
 					clientId={ clientId }
 					canUserCreateNavigationMenu={ canUserCreateNavigationMenu }
+					isResolvingCanUserCreateNavigationMenu={
+						isResolvingCanUserCreateNavigationMenu
+					}
 				/>
 			</nav>
 		);
