@@ -9,6 +9,8 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { navigation, Icon } from '@wordpress/icons';
+import { speak } from '@wordpress/a11y';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -51,6 +53,20 @@ export default function NavigationPlaceholder( {
 	};
 
 	const { navigationMenus } = useNavigationMenu();
+
+	useEffect( () => {
+		if ( isResolvingMenus ) {
+			speak(
+				'Loading Navigation block setup placeholder options.',
+				'assertive'
+			);
+		} else {
+			speak(
+				'Navigation block setup placeholder options ready.',
+				'assertive'
+			);
+		}
+	}, [ isResolvingMenus ] );
 
 	const hasNavigationMenus = !! navigationMenus?.length;
 
