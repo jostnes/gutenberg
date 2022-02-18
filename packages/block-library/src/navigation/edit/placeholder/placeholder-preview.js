@@ -15,12 +15,12 @@ import { speak } from '@wordpress/a11y';
 const PlaceholderPreview = ( { isLoading } ) => {
 	useEffect( () => {
 		if ( isLoading ) {
-			speak( 'Navigation block is loading.', 'assertive' );
+			speak( 'Navigation block is loading.', 'polite' );
 		}
 
 		return () => {
 			if ( isLoading ) {
-				speak( 'Navigation block loaded.', 'assertive' );
+				speak( 'Navigation block loaded.', 'polite' );
 			}
 		};
 	}, [ isLoading ] );
