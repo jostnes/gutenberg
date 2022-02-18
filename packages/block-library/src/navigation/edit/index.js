@@ -37,6 +37,7 @@ import {
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 	Button,
+	Spinner,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -47,7 +48,6 @@ import useListViewModal from './use-list-view-modal';
 import useNavigationMenu from '../use-navigation-menu';
 import useNavigationEntities from '../use-navigation-entities';
 import Placeholder from './placeholder';
-import PlaceholderPreview from './placeholder/placeholder-preview';
 import ResponsiveWrapper from './responsive-wrapper';
 import NavigationInnerBlocks from './inner-blocks';
 import NavigationMenuSelector from './navigation-menu-selector';
@@ -485,7 +485,7 @@ function Navigation( {
 	if ( isLoading ) {
 		return (
 			<nav { ...blockProps }>
-				<PlaceholderPreview isLoading />
+				<Spinner />
 			</nav>
 		);
 	}
