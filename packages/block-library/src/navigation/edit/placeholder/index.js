@@ -62,6 +62,11 @@ export default function NavigationPlaceholder( {
 	return (
 		<>
 			<Placeholder className="wp-block-navigation-placeholder">
+				{
+					// The <PlaceholderPreview> component is displayed conditionally via CSS depending on
+					// whether the block is selected or not. This is achieved via CSS to avoid
+					// component re-renders
+				 }
 				<PlaceholderPreview />
 				<div className="wp-block-navigation-placeholder__controls">
 					<div className="wp-block-navigation-placeholder__actions">
