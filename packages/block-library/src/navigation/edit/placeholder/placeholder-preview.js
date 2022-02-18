@@ -8,34 +8,17 @@ import classnames from 'classnames';
  */
 import { Icon, navigation } from '@wordpress/icons';
 import { __ } from '@wordpress/i18n';
-import { Spinner } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
-import { speak } from '@wordpress/a11y';
 
-const PlaceholderPreview = ( { isLoading } ) => {
-	useEffect( () => {
-		if ( isLoading ) {
-			speak( 'Navigation block is loading.', 'polite' );
-		}
-
-		return () => {
-			if ( isLoading ) {
-				speak( 'Navigation block loaded.', 'polite' );
-			}
-		};
-	}, [ isLoading ] );
-
+const PlaceholderPreview = () => {
 	return (
 		<div
 			className={ classnames(
-				'wp-block-navigation-placeholder__preview',
-				{ 'is-loading': isLoading }
+				'wp-block-navigation-placeholder__preview'
 			) }
 		>
 			<div className="wp-block-navigation-placeholder__actions__indicator">
 				<Icon icon={ navigation } />
 				{ __( 'Navigation' ) }
-				{ isLoading && <Spinner /> }
 			</div>
 		</div>
 	);
