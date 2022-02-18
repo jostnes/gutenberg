@@ -1,7 +1,12 @@
 /**
  * WordPress dependencies
  */
-import { Placeholder, Button, DropdownMenu } from '@wordpress/components';
+import {
+	Placeholder,
+	Button,
+	DropdownMenu,
+	Spinner,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { navigation, Icon } from '@wordpress/icons';
 
@@ -52,6 +57,8 @@ export default function NavigationPlaceholder( {
 		( canSwitchNavigationMenu || canUserCreateNavigationMenu ) &&
 		( hasNavigationMenus || hasMenus );
 
+	const hasActions = showSelectMenus || canUserCreateNavigationMenu;
+
 	return (
 		<>
 			<Placeholder className="wp-block-navigation-placeholder">
@@ -63,6 +70,8 @@ export default function NavigationPlaceholder( {
 						</div>
 
 						<hr />
+
+						{ ! hasActions && <Spinner /> }
 
 						{ showSelectMenus ? (
 							<>
