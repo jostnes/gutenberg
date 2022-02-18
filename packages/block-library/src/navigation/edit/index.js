@@ -309,7 +309,6 @@ function Navigation( {
 	// "loading" state:
 	// - there is a ref attribute pointing to a Navigation Post
 	// - the Navigation Post hasn't resolved yet.
-	// TODO - needs to take in account uncontrolled inner blocks.
 	const isLoading = !! ( ref && ! isEntityAvailable );
 
 	// Spacer block needs orientation from context. This is a patch until
