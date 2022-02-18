@@ -59,7 +59,7 @@ export default function NavigationPlaceholder( {
 		( hasNavigationMenus || hasMenus );
 
 	const isResolvingActions =
-		isResolvingMenus || isResolvingCanUserCreateNavigationMenu;
+		isResolvingMenus && isResolvingCanUserCreateNavigationMenu;
 
 	return (
 		<>
