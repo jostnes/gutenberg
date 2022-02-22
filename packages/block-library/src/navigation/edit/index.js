@@ -492,6 +492,7 @@ function Navigation( {
 		return (
 			<nav { ...blockProps }>
 				<PlaceholderComponent
+					isSelected={ isSelected }
 					onFinish={ ( post ) => {
 						if ( post ) {
 							setRef( post.id );

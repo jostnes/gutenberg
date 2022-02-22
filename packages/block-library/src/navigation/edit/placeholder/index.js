@@ -23,6 +23,7 @@ import useCreateNavigationMenu from '../use-create-navigation-menu';
 import NavigationMenuSelector from '../navigation-menu-selector';
 
 export default function NavigationPlaceholder( {
+	isSelected,
 	clientId,
 	onFinish,
 	canSwitchNavigationMenu,
@@ -46,7 +47,11 @@ export default function NavigationPlaceholder( {
 		onFinish( navigationMenu, blocks );
 	};
 
-	const { hasMenus, isResolvingMenus } = useNavigationEntities();
+	const {
+		hasMenus,
+		isResolvingMenus,
+		hasResolvedMenus,
+	} = useNavigationEntities();
 
 	const onCreateEmptyMenu = () => {
 		onFinishMenuCreation( [] );
@@ -55,18 +60,24 @@ export default function NavigationPlaceholder( {
 	const { navigationMenus } = useNavigationMenu();
 
 	useEffect( () => {
+		if ( ! isSelected ) {
+			return;
+		}
+
 		if ( isResolvingMenus ) {
 			speak(
 				'Loading Navigation block setup placeholder options.',
 				'polite'
 			);
-		} else {
+		}
+
+		if ( hasResolvedMenus ) {
 			speak(
 				'Navigation block setup placeholder options ready.',
 				'polite'
 			);
 		}
-	}, [ isResolvingMenus ] );
+	}, [ isResolvingMenus, isSelected ] );
 
 	const hasNavigationMenus = !! navigationMenus?.length;
 
