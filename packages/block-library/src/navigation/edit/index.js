@@ -706,7 +706,6 @@ function Navigation( {
 						>
 							{ isEntityAvailable && (
 								<NavigationInnerBlocks
-									isVisible={ ! isPlaceholderShown }
 									clientId={ clientId }
 									hasCustomPlaceholder={
 										!! CustomPlaceholder
