@@ -157,9 +157,6 @@ const setupDriver = async () => {
 	// eslint-disable-next-line no-console
 	console.log( status );
 
-	await driver.setImplicitWaitTimeout( 5000 );
-	await timer( 5000 );
-
 	await driver.setOrientation( 'PORTRAIT' );
 	return driver;
 };
@@ -452,6 +449,30 @@ const toggleOrientation = async ( driver ) => {
 	}
 };
 
+const isEditorVisible = async ( driver, iteration = 0 ) => {
+	const maxIteration = 25;
+	const timeout = 1000;
+
+	if ( iteration >= maxIteration ) {
+		throw new Error(
+			`Gutenberg Editor is still not visible after ${ iteration } retries!`
+		);
+	} else if ( iteration !== 0 ) {
+		// wait 1 second before trying to locate element again
+		await driver.sleep( timeout );
+	}
+
+	const blockLocator = isAndroid()
+		? `//android.widget.EditText[contains(@content-desc, "Post title")]`
+		: `(//XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther[contains(@name, "Post title")])`;
+
+	const locator = await driver.elementsByXPath( blockLocator );
+	if ( locator.length !== 1 ) {
+		// if locator is not visible, try again
+		return await isEditorVisible( driver, iteration + 1 );
+	}
+};
+
 module.exports = {
 	backspace,
 	timer,
@@ -472,4 +493,5 @@ module.exports = {
 	toggleHtmlMode,
 	toggleOrientation,
 	doubleTap,
+	isEditorVisible,
 };
